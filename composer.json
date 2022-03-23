@@ -1,0 +1,19 @@
+{
+    "name": "DanielVonCalabrese/be-test",
+    "description": "A simple composer package for test task",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Daniel Dimitrov",
+            "email": "danielkaaaos@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+		"psr-4": {
+			"MyApp\\": "src/"
+		}
+    },
+    "require": {}
+}
