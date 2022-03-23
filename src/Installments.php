@@ -22,119 +22,33 @@ class Installments
 	private $monthlyInterest;
 	
 	
-	public const INPUT_DATA_FORMAT = [
-		'numberOfInstallments' => [
-			'dataType' => 'int',
-			'allowedValues' => [
-				3,
-				24
-			]
-		],
-		'amount' => [
-			'dataType' => 'int',
-			'allowedValues' => [
-				500,
-				5000
-			]
-		],
-		'air' => [
-			'dataType' => 'int',
-			'allowedValues' => []
-		],
-		'maturityDate' => [
-			'dataType' => 'date',
-			'allowedValues' => 'Y-m-d'
-		],
-		'utilisationDate' => [
-			'dataType' => 'date',
-			'allowedValues' => 'Y-m-d'
-		],
+	public const INPUT_DATA_STRUCTURE = [
+		'numberOfInstallments' => '',
+		'amount' => '',
+		'air' => '',
+		'maturityDate' => '',
+		'utilisationDate' => '',
 		'taxes' => [
-			'dataType' => 'int',
-			'allowedValues' => []
+			'tax1' => '',
+			'tax2' => ''
 		]
 	];
 
-    public function checkInputValue($inputValue)
-	{
-		foreach (self::INPUT_DATA_FORMAT as $field => $rules) {
-			if ($rules['dataType'] === 'int') {
-				if (is_numeric($inputValue)) {
-					
-				}
-			}
-		}
-	}
-
     public function __construct($inputData)
 	{
-		if ($this->validateInputData($inputData)) {
+		$this->installments = (int)$inputData['numberOfInstallments'];
+		$this->amount = (float)$inputData['amount'];
+		$this->air = (float)$inputData['air'];
+		$this->maturityDate = $inputData['maturityDate'];
+		$this->utilisationDate = $inputData['utilisationDate'];
+		$this->taxes = $inputData['taxes'];
 
-			$this->installments = (int)$inputData['numberOfInstallments'];
-			$this->amount = (float)$inputData['amount'];
-			$this->air = (float)$inputData['air'];
-			$this->maturityDate = $inputData['maturityDate'];
-			$this->utilisationDate = $inputData['utilisationDate'];
-			$this->taxes = $inputData['taxes'];
-
-			$this->number = 0;
-			$this->balance = $this->amount;
-			
-			// one month interest 
-			$this->monthlyInterest  = $this->air / (12 * 100);
-		}
+		$this->number = 0;
+		$this->balance = $this->amount;
+		
+		// one month interest 
+		$this->monthlyInterest  = $this->air / (12 * 100);
     }
-
-	private function validateInputData($inputData)
-	{
-		$result = false;
-		$dataFormat = [
-			'numberOfInstallments' => [
-				3,
-				24
-			],
-			'amount' => [
-				500,
-				5000
-			],
-			'air' => 0,
-			'maturityDate' => 0,
-			'utilisationDate' => 0,
-			// 'taxes' => []
-		];
-
-		return true;
-		
-		
-		// foreach ($dataFormat as $key => $value) {
-			// if (array_key_exists($key, $inputData)) {
-				// if (is_array($value)) {
-					// if ($inputData[$key] >= min($value) && $inputData[$key] <= max($value)) {
-						// continue;
-					// } else {
-						// return false;
-					// }
-				// }
-			// }
-		// }
-
-		// $validateData = array_diff_key($dataFormat, $inputData);
-		
-		// if (empty($validateData)) {
-			// $result = true;
-		// } else {
-			// echo "<div style='background-color:#ccc;padding:0.5em;'>";
-			// echo '<p style="color:red;margin:0.5em 0em;font-weight:bold;background-color:#fff;padding:0.2em;">Missing Values</p>';
-			// foreach ($validateData as $key => $value) {
-				// echo ":: Value <b>$key</b> is missing.<br>";
-			// }
-			// echo "</div>";
-			
-			// $result = false;
-		// }
-		
-		// return $result;
-	}
 
 	public function calculateDate()
 	{
@@ -191,40 +105,4 @@ class Installments
 
 		return $schedule;
 	}
-
-	// public function calculatePrincipal() {
-		// $this->principal = round($this->monthlyPay - $this->interest, 2);
-	// }
-
-	// public function calculateInterest() {
-		
-	// }
-
-	// public function calculateTaxes() {
-		
-	// }
-
-	// ---
-	// public function getMaturityDay() {
-		// return $maturityDay = date('d', strtotime($this->maturityDate));
-	// }
-	// public function getMaturityMonth() {
-		// return $maturityMonth = date('m', strtotime($this->maturityDate));
-	// }
-	// public function getMaturityYear() {
-		// return $maturityYear = date('Y', strtotime($this->maturityDate));
-	// }
-	
-	// public function generateInstallments() {
-		// for ($i = 1; $i <= $this->installments; $i++) {
-			// $this->number = $i;
-			// $this->calculateDate($i);
-			// $this->calculatePeriod();
-			
-			// echo $installments->period;
-			
-			// TODO new Installment()!!!
-			// or ::Factory?
-		// }
-	// }
 }
